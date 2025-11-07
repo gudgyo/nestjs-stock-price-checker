@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { StockModule } from './stock/stock.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaService } from './prisma.service';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { PrismaService } from './prisma.service';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CacheModule.register({ isGlobal: true }),
     StockModule,
   ],
   controllers: [AppController],

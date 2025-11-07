@@ -9,7 +9,10 @@ import { StockFetchService } from './fetcher.service';
  */
 @Injectable()
 export class StockService {
-  constructor(private readonly stockRepo: StockRepository, private readonly priceFetcher: StockFetchService) {
+  constructor(
+    private readonly stockRepo: StockRepository,
+    private readonly priceFetcher: StockFetchService,
+  ) {
   }
 
   /**
