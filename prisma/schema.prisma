@@ -1,0 +1,30 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Stock {
+  id        Int      @id @default(autoincrement())
+  symbol    String   @unique
+  name      String? // Optional: fetched from external API
+  isActive  Boolean  @default(false) // For period checks
+  prices    Price[] // Relation to recorded
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Price {
+  id        Int      @id @default(autoincrement())
+  stock     Stock    @relation(fields: [stockId], references: [id])
+  stockId   Int
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([stockId, createdAt])
+}
